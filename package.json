@@ -1,0 +1,185 @@
+{
+  "name": "savepoint-diff",
+  "displayName": "SavePoint Diff",
+  "description": "Shows live, unsaved changes in the editor gutter — like Git diff decorations, but without Git.",
+  "version": "0.1.0",
+  "icon": "resources/icon.png",
+  "publisher": "StayElite",
+  "author": "Ashish Sharma (Stay Elite)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/StayElite/SavePoint-Diff"
+  },
+  "homepage": "https://github.com/StayElite/SavePoint-Diff",
+  "bugs": {
+    "url": "https://github.com/StayElite/SavePoint-Diff/issues"
+  },
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "diff",
+    "unsaved",
+    "gutter",
+    "changes",
+    "no-git"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "savepointDiff.toggle",
+        "title": "SavePoint Diff: Toggle"
+      },
+      {
+        "command": "savepointDiff.refresh",
+        "title": "SavePoint Diff: Refresh"
+      },
+      {
+        "command": "savepointDiff.clearDecorations",
+        "title": "SavePoint Diff: Clear Decorations"
+      },
+      {
+        "command": "savepointDiff.saveDocument",
+        "title": "SavePoint Diff: Save File",
+        "icon": "$(save)"
+      },
+      {
+        "command": "savepointDiff.saveAll",
+        "title": "SavePoint Diff: Save All Unsaved Changes",
+        "icon": "$(save-all)"
+      },
+      {
+        "command": "savepointDiff.revertChange",
+        "title": "SavePoint Diff: Revert Change (at Cursor)"
+      },
+      {
+        "command": "savepointDiff.createSavepoint",
+        "title": "SavePoint Diff: Create Savepoint (Don't Save to Disk)"
+      },
+      {
+        "command": "savepointDiff.saveSnapshot",
+        "title": "SavePoint Diff: Save Snapshot (Git-style Checkpoint)",
+        "icon": "$(history)"
+      },
+      {
+        "command": "savepointDiff.restoreSnapshot",
+        "title": "SavePoint Diff: View & Restore Snapshot...",
+        "icon": "$(history)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "savepointDiff.saveDocument",
+          "when": "false"
+        }
+      ],
+      "scm/title": [
+        {
+          "command": "savepointDiff.saveAll",
+          "when": "scmProvider == savepointDiff",
+          "group": "navigation"
+        }
+      ],
+      "scm/resourceState/context": [
+        {
+          "command": "savepointDiff.saveDocument",
+          "when": "scmProvider == savepointDiff && scmResourceGroup == unsaved",
+          "group": "inline"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "SavePoint Diff",
+      "properties": {
+        "savepointDiff.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable SavePoint Diff globally."
+        },
+        "savepointDiff.showAdded": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show gutter markers for added lines."
+        },
+        "savepointDiff.showModified": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show gutter markers for modified lines."
+        },
+        "savepointDiff.showDeleted": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show gutter markers for deleted lines."
+        },
+        "savepointDiff.showOverviewRuler": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show change markers in the overview ruler (the strip on the right of the editor)."
+        },
+        "savepointDiff.showBackgroundHighlight": {
+          "type": "boolean",
+          "default": false,
+          "description": "Also lightly highlight the background of changed lines, in addition to gutter markers. Off by default so the extension never alters how your file visually reads unless you opt in."
+        },
+        "savepointDiff.enableRevertInHover": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show a 'Revert this change' link when hovering a gutter marker, letting you discard a single added, modified, or deleted block back to its baseline content without saving. Also reachable from the Command Palette (SavePoint Diff: Revert Change), which acts on whatever change is under the cursor."
+        },
+        "savepointDiff.maxFileSize": {
+          "type": "number",
+          "default": 2000000,
+          "minimum": 1,
+          "description": "Maximum file size in bytes for which live diffing is computed. Larger files are skipped to protect performance. Must be a positive number; an invalid value (zero, negative, or non-numeric) falls back to the default."
+        },
+        "savepointDiff.debounceMs": {
+          "type": "number",
+          "default": 150,
+          "minimum": 0,
+          "description": "Milliseconds to wait after the last keystroke before recalculating the diff."
+        },
+        "savepointDiff.snapshots.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Git/GitHub-style checkpoint snapshot history so you can view, compare, and revert to prior snapshots."
+        },
+        "savepointDiff.snapshots.maxSnapshots": {
+          "type": "number",
+          "default": 10,
+          "minimum": 1,
+          "description": "Maximum number of historical snapshots to retain per file."
+        },
+        "savepointDiff.snapshots.autoSnapshotOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically capture a snapshot each time a file is saved."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^16.18.0",
+    "@types/vscode": "^1.60.0",
+    "@types/diff": "^5.2.1",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "diff": "^5.2.0"
+  }
+}
