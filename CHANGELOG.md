@@ -3,6 +3,16 @@
 All notable changes to the "SavePoint Diff" extension are documented
 in this file.
 
+## [Unreleased]
+
+- **Added:** optional cloud storage sync (rclone-based, off by default) as a
+  private alternative to GitHub: upload a whole project folder, then only
+  changed/new/deleted files sync on save. A `.savepoint/history.json` log
+  (in a `.savepoint/` folder in the cloud copy, like `.git`) records an ID,
+  timestamp, changed files and a short summary for every save that changed
+  something. New commands: Cloud: Connect Storage / Upload Project Folder /
+  Sync Now / View Savepoint History.
+
 ## [0.1.0] - Initial release
 
 - Live, real-time gutter decorations (added/modified/deleted) comparing
@@ -330,6 +340,3 @@ A deep, full-source audit across the codebase uncovered several edge cases and r
 
 - **Added: Extension Logo**: High-resolution, professional extension branding icon (`resources/icon.png`) fusing a modern savepoint floppy disk design with vibrant git diff colors (green added `+`, blue modified `~`, red deleted `-`). Configured in `package.json` for VS Code marketplace and extension manager display.
 - **Added: Interactive Demo GIF for README**: High-quality animated walkthrough (`resources/demo.gif`) embedded into `README.md` showcasing live gutter marker updates, modified file badges in Source Control, per-change revert tooltip, and automatic snapshot clearing on save.
-
-
-
