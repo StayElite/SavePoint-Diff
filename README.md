@@ -142,7 +142,7 @@ No Git objects, no filesystem snapshots, no manual delta tracking.
 ## 📋 Requirements
 
 - VS Code `1.60.0` or later
-- Nothing else — no Git, no other extensions, no network access
+- Nothing else — no Git, no other extensions (rclone only if you enable cloud sync)
 
 ## ⚠️ Known limitations
 
@@ -168,9 +168,20 @@ Contributions are welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for build, p
 
 See [CHANGELOG.md](./CHANGELOG.md) for the full history.
 
+## ☁️ Optional cloud sync (GitHub alternative)
+
+Off by default. Requires [rclone](https://rclone.org) (Drive, Mega and many more) configured via `rclone config`.
+
+1. `SavePoint Diff: Cloud: Connect Storage...` — enter an rclone remote like `mydrive:projects/myapp`.
+2. `SavePoint Diff: Cloud: Upload Project Folder...` — uploads the folder with its structure (`.git`, `node_modules`, `out`, `.env*` are excluded by default via `savepointDiff.cloud.exclude`).
+3. After that, each save syncs only added/modified/deleted files. `Cloud: Sync Now` forces a sync.
+4. Every sync that changed something appends an entry (ID, timestamp, changed files, short summary) to `.savepoint/history.json` inside the cloud copy — a `.savepoint/` folder, like `.git`. View it with `Cloud: View Savepoint History`.
+
+Credentials stay in your rclone config; the extension never stores them. Limits: only one folder is synced; two machines writing to the same remote can overwrite each other's log; rclone must be installed where the extension runs (e.g. the remote host in SSH/WSL).
+
 ## 🔒 Privacy
 
-Everything happens locally, in memory, inside the extension host. No network requests, no telemetry, no external services of any kind.
+Everything happens locally, in memory, inside the extension host. No telemetry. No network requests unless you turn on the optional cloud sync, which only talks to the rclone remote you choose.
 
 ## 👤 Author
 
@@ -301,7 +312,7 @@ Yes. It runs entirely inside the extension host and works with local folders, Re
 
 ### Does SavePoint Diff send my code anywhere or collect telemetry?
 
-No. Everything runs locally in memory inside the extension host, with no network requests, no telemetry, and no external services. Baselines are never written to disk and exist only for the current window session.
+No telemetry, ever. Everything runs locally unless you opt in to cloud sync, which uploads to the rclone remote you choose. Baselines are never written to disk and exist only for the current window session.
 
 ---
 
