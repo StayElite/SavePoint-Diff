@@ -186,6 +186,8 @@ Off by default. Requires [rclone](https://rclone.org) (Drive, Mega and many more
 3. After that, each save syncs only added/modified/deleted files. `Cloud: Sync Now` forces a sync.
 4. Every sync that changed something appends an entry (ID, timestamp, changed files, short summary) to `.savepoint/history.json` inside the cloud copy — a `.savepoint/` folder, like `.git`. View it with `Cloud: View Savepoint History`.
 
+📖 **Full documentation (rclone setup, `.savepoint` format, troubleshooting):** [DOCUMENTATION.md](./DOCUMENTATION.md)
+
 Credentials stay in your rclone config; the extension never stores them. Limits: only one folder is synced; two machines writing to the same remote can overwrite each other's log; rclone must be installed where the extension runs (e.g. the remote host in SSH/WSL).
 
 ## 🔒 Privacy
