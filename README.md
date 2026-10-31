@@ -13,7 +13,7 @@
   <a href="https://marketplace.visualstudio.com/items?itemName=StayElite.StayElite-Savepoint-Diff"><img alt="Install from the VS Code Marketplace" src="https://img.shields.io/badge/VS%20Code-Install%20from%20Marketplace-007ACC?logo=visualstudiocode&logoColor=white" /></a>
   <img alt="Works without Git" src="https://img.shields.io/badge/works%20without-Git-orange" />
   <a href="./LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green" /></a>
-  <img alt="Privacy: 100% local" src="https://img.shields.io/badge/privacy-100%25%20local-brightgreen" />
+  <img alt="Privacy: local by default" src="https://img.shields.io/badge/privacy-local%20by%20default-brightgreen" />
 </p>
 
 <p align="center">
@@ -26,7 +26,7 @@
 
 SavePoint Diff adds **live, colour-coded gutter markers** and a familiar **Source Control panel entry** for your **unsaved** edits, updated on every keystroke.
 
-It works in **any folder** — Git repo or not. No `.git` folder, no network access, no external services.
+It works in **any folder** — Git repo or not. No `.git` folder, no external services (network only if you opt in to cloud sync).
 
 > **Git compares against your last *commit*. SavePoint Diff compares against your last *save*.**
 
@@ -79,7 +79,7 @@ That's it — no configuration needed.
 
 - 🌐 **Works everywhere you code** — local folders, Remote-SSH, WSL, Dev Containers, GitHub Codespaces, and virtual filesystems like vscode.dev / github.dev.
 - ⚙️ **Fully configurable** — toggle each marker type, the overview ruler, optional background highlighting, and performance thresholds for large files.
-- 🔒 **100% local & private** — everything runs inside the extension host. No Git, no telemetry, no network requests. Baselines live only in memory for the current window session.
+- 🔒 **Local & private by default** — everything runs inside the extension host. No Git, no telemetry, no network requests unless you opt in to cloud sync. Baselines live only in memory for the current window session.
 
 ## 🆚 How is this different from Git's gutter?
 
