@@ -29,12 +29,12 @@ vsce package
 (Equivalently, `npm run package`, which runs the same `vsce package`
 command.)
 
-This produces `savepoint-diff-0.1.0.vsix` (named after the current
+This produces `savepoint-diff-0.2.0.vsix` (named after the current
 `version` in `package.json`), which can be installed via
 **Extensions view → "…" menu → Install from VSIX…**, or:
 
 ```bash
-code --install-extension savepoint-diff-0.1.0.vsix
+code --install-extension savepoint-diff-0.2.0.vsix
 ```
 
 `vsce` automatically resolves and bundles only the production
