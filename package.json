@@ -2,7 +2,7 @@
   "name": "savepoint-diff",
   "displayName": "SavePoint Diff",
   "description": "Shows live, unsaved changes in the editor gutter — like Git diff decorations, but without Git.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "icon": "resources/icon.png",
   "publisher": "StayElite",
   "author": "Ashish Sharma (Stay Elite)",
