@@ -3,7 +3,7 @@
 All notable changes to the "SavePoint Diff" extension are documented
 in this file.
 
-## [Unreleased]
+## [0.2.0] - 2026-10-31
 
 - **Added:** optional cloud storage sync (rclone-based, off by default) as a
   private alternative to GitHub: upload a whole project folder, then only
@@ -12,6 +12,9 @@ in this file.
   timestamp, changed files and a short summary for every save that changed
   something. New commands: Cloud: Connect Storage / Upload Project Folder /
   Sync Now / View Savepoint History.
+- **Added:** `DOCUMENTATION.md`, a single full reference covering every
+  feature, command, setting, source file, and the rclone setup guide.
+- Cloud sync is off by default; with it off there is no network use.
 
 ## [0.1.0] - Initial release
 
