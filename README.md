@@ -109,6 +109,10 @@ Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) and type **SavePoint D
 | `SavePoint Diff: Create Savepoint (Don't Save to Disk)` | Set the current content as the new baseline without writing to disk. |
 | `SavePoint Diff: Save Snapshot` | Capture a named/timestamped checkpoint of the current file. |
 | `SavePoint Diff: View & Restore Snapshot...` | Open the snapshot history to compare or restore. |
+| `SavePoint Diff: Cloud: Connect Storage...` | Set the rclone remote for optional cloud sync and test it. |
+| `SavePoint Diff: Cloud: Upload Project Folder...` | Upload a whole project folder to the connected cloud storage. |
+| `SavePoint Diff: Cloud: Sync Now` | Sync changed, new and deleted files immediately. |
+| `SavePoint Diff: Cloud: View Savepoint History` | Browse the cloud `.savepoint/history.json` log, newest first. |
 
 ## ⚙️ Settings
 
@@ -126,6 +130,11 @@ Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) and type **SavePoint D
 | `savepointDiff.snapshots.enabled` | `true` | Enable/disable snapshot history. |
 | `savepointDiff.snapshots.maxSnapshots` | `10` | Maximum snapshots kept per file. |
 | `savepointDiff.snapshots.autoSnapshotOnSave` | `true` | Automatically snapshot whenever a file is saved. |
+| `savepointDiff.cloud.enabled` | `false` | Optional cloud sync via rclone. Off means no network use. |
+| `savepointDiff.cloud.remote` | `""` | rclone remote and folder, e.g. `mydrive:projects/myapp`. |
+| `savepointDiff.cloud.rclonePath` | `rclone` | Path to the rclone executable. |
+| `savepointDiff.cloud.autoSyncOnSave` | `true` | Sync changed files to the cloud after each save. |
+| `savepointDiff.cloud.exclude` | `.git`, `node_modules`, `out`, `.env*` | Names never uploaded (`*` wildcards supported). |
 
 ## 🔧 How it works
 
