@@ -57,6 +57,7 @@ savepoint-diff/
 │   ├── commands.ts         # Toggle/Refresh/Clear/Revert/Savepoint/Save
 │   │                       #   commands + the status bar item (incl. its
 │   │                       #   live +added ~modified -deleted summary)
+│   ├── cloudSync.ts        # optional rclone cloud sync + .savepoint/history.json log
 │   ├── types.ts
 │   └── utils.ts            # keys, scheme filtering, debounce, clamping
 └── resources/

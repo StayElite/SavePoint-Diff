@@ -13,7 +13,7 @@
   <a href="https://marketplace.visualstudio.com/items?itemName=StayElite.StayElite-Savepoint-Diff"><img alt="Install from the VS Code Marketplace" src="https://img.shields.io/badge/VS%20Code-Install%20from%20Marketplace-007ACC?logo=visualstudiocode&logoColor=white" /></a>
   <img alt="Works without Git" src="https://img.shields.io/badge/works%20without-Git-orange" />
   <a href="./LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green" /></a>
-  <img alt="Privacy: 100% local" src="https://img.shields.io/badge/privacy-100%25%20local-brightgreen" />
+  <img alt="Privacy: local by default" src="https://img.shields.io/badge/privacy-local%20by%20default-brightgreen" />
 </p>
 
 <p align="center">
@@ -26,7 +26,7 @@
 
 SavePoint Diff adds **live, colour-coded gutter markers** and a familiar **Source Control panel entry** for your **unsaved** edits, updated on every keystroke.
 
-It works in **any folder** — Git repo or not. No `.git` folder, no network access, no external services.
+It works in **any folder** — Git repo or not. No `.git` folder, no external services (network only if you opt in to cloud sync).
 
 > **Git compares against your last *commit*. SavePoint Diff compares against your last *save*.**
 
@@ -79,7 +79,7 @@ That's it — no configuration needed.
 
 - 🌐 **Works everywhere you code** — local folders, Remote-SSH, WSL, Dev Containers, GitHub Codespaces, and virtual filesystems like vscode.dev / github.dev.
 - ⚙️ **Fully configurable** — toggle each marker type, the overview ruler, optional background highlighting, and performance thresholds for large files.
-- 🔒 **100% local & private** — everything runs inside the extension host. No Git, no telemetry, no network requests. Baselines live only in memory for the current window session.
+- 🔒 **Local & private by default** — everything runs inside the extension host. No Git, no telemetry, no network requests unless you opt in to cloud sync. Baselines live only in memory for the current window session.
 
 ## 🆚 How is this different from Git's gutter?
 
@@ -109,6 +109,10 @@ Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) and type **SavePoint D
 | `SavePoint Diff: Create Savepoint (Don't Save to Disk)` | Set the current content as the new baseline without writing to disk. |
 | `SavePoint Diff: Save Snapshot` | Capture a named/timestamped checkpoint of the current file. |
 | `SavePoint Diff: View & Restore Snapshot...` | Open the snapshot history to compare or restore. |
+| `SavePoint Diff: Cloud: Connect Storage...` | Set the rclone remote for optional cloud sync and test it. |
+| `SavePoint Diff: Cloud: Upload Project Folder...` | Upload a whole project folder to the connected cloud storage. |
+| `SavePoint Diff: Cloud: Sync Now` | Sync changed, new and deleted files immediately. |
+| `SavePoint Diff: Cloud: View Savepoint History` | Browse the cloud `.savepoint/history.json` log, newest first. |
 
 ## ⚙️ Settings
 
@@ -126,6 +130,11 @@ Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) and type **SavePoint D
 | `savepointDiff.snapshots.enabled` | `true` | Enable/disable snapshot history. |
 | `savepointDiff.snapshots.maxSnapshots` | `10` | Maximum snapshots kept per file. |
 | `savepointDiff.snapshots.autoSnapshotOnSave` | `true` | Automatically snapshot whenever a file is saved. |
+| `savepointDiff.cloud.enabled` | `false` | Optional cloud sync via rclone. Off means no network use. |
+| `savepointDiff.cloud.remote` | `""` | rclone remote and folder, e.g. `mydrive:projects/myapp`. |
+| `savepointDiff.cloud.rclonePath` | `rclone` | Path to the rclone executable. |
+| `savepointDiff.cloud.autoSyncOnSave` | `true` | Sync changed files to the cloud after each save. |
+| `savepointDiff.cloud.exclude` | `.git`, `node_modules`, `out`, `.env*` | Names never uploaded (`*` wildcards supported). |
 
 ## 🔧 How it works
 
@@ -142,7 +151,7 @@ No Git objects, no filesystem snapshots, no manual delta tracking.
 ## 📋 Requirements
 
 - VS Code `1.60.0` or later
-- Nothing else — no Git, no other extensions, no network access
+- Nothing else — no Git, no other extensions (rclone only if you enable cloud sync)
 
 ## ⚠️ Known limitations
 
@@ -168,9 +177,20 @@ Contributions are welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for build, p
 
 See [CHANGELOG.md](./CHANGELOG.md) for the full history.
 
+## ☁️ Optional cloud sync (GitHub alternative)
+
+Off by default. Requires [rclone](https://rclone.org) (Drive, Mega and many more) configured via `rclone config`.
+
+1. `SavePoint Diff: Cloud: Connect Storage...` — enter an rclone remote like `mydrive:projects/myapp`.
+2. `SavePoint Diff: Cloud: Upload Project Folder...` — uploads the folder with its structure (`.git`, `node_modules`, `out`, `.env*` are excluded by default via `savepointDiff.cloud.exclude`).
+3. After that, each save syncs only added/modified/deleted files. `Cloud: Sync Now` forces a sync.
+4. Every sync that changed something appends an entry (ID, timestamp, changed files, short summary) to `.savepoint/history.json` inside the cloud copy — a `.savepoint/` folder, like `.git`. View it with `Cloud: View Savepoint History`.
+
+Credentials stay in your rclone config; the extension never stores them. Limits: only one folder is synced; two machines writing to the same remote can overwrite each other's log; rclone must be installed where the extension runs (e.g. the remote host in SSH/WSL).
+
 ## 🔒 Privacy
 
-Everything happens locally, in memory, inside the extension host. No network requests, no telemetry, no external services of any kind.
+Everything happens locally, in memory, inside the extension host. No telemetry. No network requests unless you turn on the optional cloud sync, which only talks to the rclone remote you choose.
 
 ## 👤 Author
 
@@ -301,7 +321,7 @@ Yes. It runs entirely inside the extension host and works with local folders, Re
 
 ### Does SavePoint Diff send my code anywhere or collect telemetry?
 
-No. Everything runs locally in memory inside the extension host, with no network requests, no telemetry, and no external services. Baselines are never written to disk and exist only for the current window session.
+No telemetry, ever. Everything runs locally unless you opt in to cloud sync, which uploads to the rclone remote you choose. Baselines are never written to disk and exist only for the current window session.
 
 ---
 

@@ -73,6 +73,22 @@
         "command": "savepointDiff.restoreSnapshot",
         "title": "SavePoint Diff: View & Restore Snapshot...",
         "icon": "$(history)"
+      },
+      {
+        "command": "savepointDiff.cloud.connect",
+        "title": "SavePoint Diff: Cloud: Connect Storage..."
+      },
+      {
+        "command": "savepointDiff.cloud.uploadFolder",
+        "title": "SavePoint Diff: Cloud: Upload Project Folder..."
+      },
+      {
+        "command": "savepointDiff.cloud.syncNow",
+        "title": "SavePoint Diff: Cloud: Sync Now"
+      },
+      {
+        "command": "savepointDiff.cloud.history",
+        "title": "SavePoint Diff: Cloud: View Savepoint History"
       }
     ],
     "menus": {
@@ -162,6 +178,32 @@
           "type": "boolean",
           "default": true,
           "description": "Automatically capture a snapshot each time a file is saved."
+        },
+        "savepointDiff.cloud.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Optional: sync the project folder to cloud storage (via rclone) on save, as a private alternative to GitHub. Off by default; when off, no network is used."
+        },
+        "savepointDiff.cloud.remote": {
+          "type": "string",
+          "default": "",
+          "description": "rclone remote and folder to sync to, e.g. mydrive:projects/myapp. Set it with 'Cloud: Connect Storage'. Credentials live in your rclone config, never here."
+        },
+        "savepointDiff.cloud.rclonePath": {
+          "type": "string",
+          "default": "rclone",
+          "description": "Path to the rclone executable."
+        },
+        "savepointDiff.cloud.autoSyncOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Sync changed files to the cloud automatically after each save."
+        },
+        "savepointDiff.cloud.exclude": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [".git", "node_modules", "out", ".env*"],
+          "description": "File or folder names never uploaded (supports * wildcards, matched per name)."
         }
       }
     }

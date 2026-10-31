@@ -28,6 +28,7 @@ import { computeDiff } from "./diffEngine";
 import { registerCommands, updateStatusBarItem, summarizeChanges, CommandHost, RevertChangeRef } from "./commands";
 import { DiffChange, DocumentState } from "./types";
 import { byteLength, clampLine, debounce, isDiffableDocument, isUntitled, keyFor } from "./utils";
+import { CloudSync } from "./cloudSync";
 import {
   BASELINE_SCHEME,
   BaselineContentProvider,
@@ -140,6 +141,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
   const snapshotManager = new SnapshotManager(config.snapshots);
   const snapshotContentProvider = new SnapshotContentProvider(snapshotManager);
+  const cloudSync = new CloudSync(context); // optional; inert unless savepointDiff.cloud.enabled
 
   context.subscriptions.push(
     vscode.workspace.registerTextDocumentContentProvider(BASELINE_SCHEME, baselineContentProvider),
@@ -839,6 +841,7 @@ export function activate(context: vscode.ExtensionContext): void {
       if (config.snapshots.enabled && config.snapshots.autoSnapshotOnSave) {
         snapshotManager.addSnapshot(document.uri, document.getText());
       }
+      cloudSync.onSaved(document);
       const state = stateFor(document.uri);
       if (state.timer) {
         clearTimeout(state.timer);
